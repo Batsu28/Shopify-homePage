@@ -1,86 +1,60 @@
-import { Instance, Instances } from "@react-three/drei";
-import { useMemo, useState, useRef } from "react";
+"use client";
+import {
+	Edges,
+	GradientTexture,
+	GradientType,
+	Instance,
+	Instances,
+	Outlines,
+} from "@react-three/drei";
+import { useMemo, useState, useRef, memo } from "react";
 import React from "react";
-import { motion } from "framer-motion-3d";
-import niceColors from "nice-color-palettes";
-
-const boxSize = 0.2;
-
-const midZNum = [8, 9, 10, 11, 12, 13, 14];
-const midXNum = [9, 10, 11, 12, 13, 14];
+import { useShape } from "./h-position";
+import HoverBox from "./hoverbox";
 
 function LetterH({ position }) {
-	const [hovered, setHovered] = useState([]);
-
-	const hShapePositions = useMemo(() => {
-		const positions = [];
-		for (let x = 0; x < 24; x++) {
-			for (let z = 0; z < 23; z++) {
-				if (midZNum.includes(z)) {
-					if (
-						midXNum.includes(x) &&
-						((x - 9 >= 0 && x + 9 < 24) || (z - 8 >= 0 && z + 8 < 23))
-					) {
-						positions.push({
-							position: [x, 0, z],
-							value: 0,
-							colors: Array.from(
-								{ length: 4 },
-								() => niceColors[17][Math.floor(Math.random() * 5)]
-							),
-						});
-					}
-				} else {
-					positions.push({
-						position: [x, 0, z],
-						value: 0,
-						colors: Array.from(
-							{ length: 4 },
-							() => niceColors[17][Math.floor(Math.random() * 5)]
-						),
-					});
-				}
-			}
-		}
-		return positions;
-	}, []);
+	const { hShape } = useShape();
 
 	const pointerOver = (e, position) => {
 		e.stopPropagation();
-		let hoverPos = [];
-		hShapePositions.forEach((box) => {
-			const [x, _, z] = box.position;
+		hShape.forEach((info) => {
+			const [x, _, z] = info.position;
 			if (Math.abs(x - position[0]) <= 2 && Math.abs(z - position[2]) <= 2) {
-				hoverPos.push(box.position);
 				if (Math.abs(x - position[0]) <= 1 && Math.abs(z - position[2]) <= 1) {
-					box.value = 1;
+					info.value = 1;
 				} else {
-					box.value = 0.5;
+					info.value = 0.5;
 				}
 			}
 		});
-		setHovered(hoverPos);
 	};
 
 	return (
 		<group>
 			<Instances
-				limit={2000}
-				range={2000}
+				limit={1800}
+				range={1800}
 				position={position}>
 				<boxGeometry />
-				<meshStandardMaterial />
+
+				<meshStandardMaterial
+					emissive={"royalblue"}
+					emissiveIntensity={0.2}>
+					<GradientTexture
+						stops={[0, 1]}
+						colors={["royalblue", "white"]}
+						size={1024}
+						width={1024}
+						type={GradientType.Radial}
+					/>
+				</meshStandardMaterial>
 
 				<group>
-					{hShapePositions.map((props, key) => (
+					{hShape.map((props, key) => (
 						<HoverBox
 							key={key}
-							position={props.position}
-							value={props.value}
-							colors={props.colors}
+							box={props}
 							pointerOver={pointerOver}
-							hovered={hovered}
-							setHovered={setHovered}
 						/>
 					))}
 				</group>
@@ -89,41 +63,4 @@ function LetterH({ position }) {
 	);
 }
 
-function HoverBox({
-	position,
-	value,
-	colors,
-	pointerOver,
-	hovered,
-	setHovered,
-}) {
-	const isHovered = hovered.includes(position);
-
-	const pointerLeave = () => {
-		setHovered([]);
-	};
-
-	return (
-		<motion.group
-			onPointerEnter={(e) => pointerOver(e, position)}
-			onPointerLeave={pointerLeave}
-			position={position}
-			whileHover={{
-				y: isHovered ? 1.5 : 0,
-				transition: { duration: 0.3 },
-			}}
-			animate={isHovered ? { y: value } : { y: 0 }}>
-			{colors.map((color, index) => (
-				<Instance
-					args={[boxSize, boxSize, boxSize]}
-					scale={0.9}
-					color={color}
-					position={[0, index, 0]}
-					key={index}
-				/>
-			))}
-		</motion.group>
-	);
-}
-
-export default LetterH;
+export default memo(LetterH);
