@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	box-sizing: border-box;
+}
+
+.flexRowBetween {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.flexRowCenter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.readDoc {
+	border: 2px solid white;
+	background: linear-gradient(#354cf6, #8e01f0);
+	padding: 12px 20px;
+	pointer-events: initial;
+}
+.readDoc:hover {
+	background: linear-gradient(#8e01f0, #354cf6);
+}
+
+.botOverlay {
+	border: 1px black solid;
+}
