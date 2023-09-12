@@ -1,13 +1,13 @@
-import { Edges, Instance } from "@react-three/drei";
+import { Instance } from "@react-three/drei";
 import { motion } from "framer-motion-3d";
-import { useShape } from "./h-position";
 import { useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useShape } from "./positions";
 
 const arr = [0, 1, 2, 3];
 const boxSize = 0.2;
 
-const HoverBox = ({ box, pointerOver, hoverPosition, setHoverPosition }) => {
+const BoxInstance = ({ box, pointerOver, hoverPosition, setHoverPosition }) => {
   const ref = useRef();
   const { hShape } = useShape();
   const [animate, setAnimate] = useState(0);
@@ -25,34 +25,40 @@ const HoverBox = ({ box, pointerOver, hoverPosition, setHoverPosition }) => {
 
     if (!hoverPosition) {
       value = 0;
-    } else {
-      const [x, _, z] = hoverPosition;
-      const check =
-        Math.abs(x - box.position[0]) + Math.abs(z - box.position[2]);
+      setAnimate(value);
+      return;
+    }
+    const [x, _, z] = hoverPosition;
 
-      if (check <= 0) {
+    const check = Math.abs(x - box.position[0]) + Math.abs(z - box.position[2]);
+
+    switch (true) {
+      case check <= 0:
         value = 0.9;
-      } else if (check <= 2) {
+        break;
+      case check <= 2:
         value = 0.6;
-      } else if (check <= 4) {
+        break;
+      case check <= 3:
         value = 0.3;
-      }
+        break;
+      default:
+        value = 0;
+        break;
     }
     setAnimate(value);
   });
 
-  const instances = useMemo(
-    () =>
-      arr.map((_, index) => (
-        <Instance
-          scale={0.99}
-          color={"royalBlue"}
-          key={index}
-          position={[0, index, 0]}
-        />
-      )),
-    [box]
-  );
+  const instances = useMemo(() => {
+    return arr.map((_, index) => (
+      <Instance
+        key={index}
+        scale={0.9``}
+        position={[0, index, 0]}
+        color={"royalBlue"}
+      />
+    ));
+  }, [box]);
 
   return (
     <motion.group
@@ -60,7 +66,7 @@ const HoverBox = ({ box, pointerOver, hoverPosition, setHoverPosition }) => {
       onPointerLeave={pointerLeave}
       position={box.position}
       animate={{ y: animate }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       ref={ref}
     >
       {instances}
@@ -68,4 +74,4 @@ const HoverBox = ({ box, pointerOver, hoverPosition, setHoverPosition }) => {
   );
 };
 
-export default HoverBox;
+export default BoxInstance;

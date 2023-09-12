@@ -1,26 +1,32 @@
 "use client";
 
-import Boxes from "@/app/home/canvas/boxes";
-import { CameraControls, OrbitControls, Stars, Stats } from "@react-three/drei";
+import { CameraControls, OrbitControls, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import LetterH from "./h-shape";
 
 const HCanvas = () => {
-	return (
-		<Canvas
-			camera={{ position: [-8, 9, -4] }}
-			dpr={1}>
-			<ambientLight intensity={0.85} />
-			<directionalLight
-				position={[-10, -10, -10]}
-				intensity={1}
-			/>
-			<LetterH position={[-4, -1, 4]} />
-			<Stats />
-			<OrbitControls />
-			{/* <CameraControls /> */}
-		</Canvas>
-	);
+  return (
+    <Canvas camera={{ position: [25, 25, 20], fov: 55 }} dpr={1}>
+      <ambientLight intensity={0.85} />
+      <pointLight
+        color={"aqua"}
+        intensity={500}
+        position={[-5.5, 18, 8.5]}
+        decay={1}
+      />
+
+      <spotLight
+        color={"purple"}
+        intensity={400}
+        position={[20, 20, -15]}
+        decay={0.4}
+      />
+      <LetterH position={[-5, 14, -15]} scale={1} />
+      <Stats />
+      {/* <OrbitControls /> */}
+      {/* <CameraControls /> */}
+    </Canvas>
+  );
 };
 
 export default HCanvas;

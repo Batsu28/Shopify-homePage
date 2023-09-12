@@ -1,66 +1,39 @@
 "use client";
-import {
-	Edges,
-	GradientTexture,
-	GradientType,
-	Instance,
-	Instances,
-	Outlines,
-} from "@react-three/drei";
-import { useMemo, useState, useRef, memo } from "react";
+import { Edges, Instances, Resize } from "@react-three/drei";
+import { useState, memo } from "react";
 import React from "react";
 import { useShape } from "./h-position";
 import HoverBox from "./hoverbox";
 
-function LetterH({ position }) {
-	const { hShape } = useShape();
+function LetterH({ ...props }) {
+  const { hShape } = useShape();
+  const [hoverPosition, setHoverPosition] = useState(null);
 
-	const pointerOver = (e, position) => {
-		e.stopPropagation();
-		hShape.forEach((info) => {
-			const [x, _, z] = info.position;
-			if (Math.abs(x - position[0]) <= 2 && Math.abs(z - position[2]) <= 2) {
-				if (Math.abs(x - position[0]) <= 1 && Math.abs(z - position[2]) <= 1) {
-					info.value = 1;
-				} else {
-					info.value = 0.5;
-				}
-			}
-		});
-	};
+  const pointerOver = (e, position) => {
+    e.stopPropagation();
+    setHoverPosition(position);
+  };
 
-	return (
-		<group>
-			<Instances
-				limit={1800}
-				range={1800}
-				position={position}>
-				<boxGeometry />
+  return (
+    <group {...props}>
+      <Instances limit={hShape.length * 4} range={hShape.length * 4}>
+        <boxGeometry />
+        <meshStandardMaterial emissive={"blue"} color={"blue"} />
 
-				<meshStandardMaterial
-					emissive={"royalblue"}
-					emissiveIntensity={0.2}>
-					<GradientTexture
-						stops={[0, 1]}
-						colors={["royalblue", "white"]}
-						size={1024}
-						width={1024}
-						type={GradientType.Radial}
-					/>
-				</meshStandardMaterial>
-
-				<group>
-					{hShape.map((props, key) => (
-						<HoverBox
-							key={key}
-							box={props}
-							pointerOver={pointerOver}
-						/>
-					))}
-				</group>
-			</Instances>
-		</group>
-	);
+        <group>
+          {hShape.map((props, key) => (
+            <HoverBox
+              key={key}
+              box={props}
+              pointerOver={pointerOver}
+              hoverPosition={hoverPosition}
+              setHoverPosition={setHoverPosition}
+            />
+          ))}
+        </group>
+      </Instances>
+    </group>
+  );
 }
 
 export default memo(LetterH);

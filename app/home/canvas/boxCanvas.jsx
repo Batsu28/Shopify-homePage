@@ -6,26 +6,31 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 
 const BoxCanvas = () => {
-	return (
-		<Canvas
-			camera={{ position: [-8, 9, -4] }}
-			dpr={1}>
-			<ambientLight intensity={0.85} />
-			<directionalLight
-				position={[-10, -10, -10]}
-				intensity={1}
-			/>
-			<Suspense fallback={null}>
-				<Boxes position={[-4, -1, 4]} />
-				<Boxes position={[-18, -8, -10]} />
-			</Suspense>
+  return (
+    <Canvas camera={{ position: [25, 25, 20], fov: 55 }} dpr={1}>
+      <ambientLight intensity={0.85} />
+      <pointLight
+        color={"aqua"}
+        intensity={500}
+        position={[-5.5, 18, 8.5]}
+        decay={1}
+      />
 
-			<Stars />
-			<Stats />
-			{/* <OrbitControls /> */}
-			{/* <CameraControls /> */}
-		</Canvas>
-	);
+      <spotLight
+        color={"purple"}
+        intensity={400}
+        position={[20, 20, -15]}
+        decay={0.4}
+      />
+      <Suspense fallback={null}>
+        <Boxes position={[-5, 14, -15]} />
+        <Boxes position={[7, 8, -1]} />
+      </Suspense>
+      <Stats />
+      {/* <OrbitControls /> */}
+      {/* <CameraControls /> */}
+    </Canvas>
+  );
 };
 
 export default BoxCanvas;
