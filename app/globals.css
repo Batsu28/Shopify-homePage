@@ -3,30 +3,38 @@
 @tailwind utilities;
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .flexRowBetween {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .flexRowCenter {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .readDoc {
-	border: 2px solid white;
-	background: linear-gradient(#354cf6, #8e01f0);
-	padding: 12px 20px;
-	pointer-events: initial;
+  border: 2px solid white;
+  background: linear-gradient(#354cf6, #8e01f0);
+  padding: 12px 20px;
+  pointer-events: initial;
 }
 .readDoc:hover {
-	background: linear-gradient(#8e01f0, #354cf6);
+  background: linear-gradient(#8e01f0, #354cf6);
 }
 
 .botOverlay {
-	border: 1px black solid;
+  border: 1px black solid;
+}
+.copyBtn {
+  border: dashed white 2px;
+  padding: 12px 20px;
+  pointer-events: initial;
+}
+.copyBtn:hover {
+  background: #7a0080;
 }

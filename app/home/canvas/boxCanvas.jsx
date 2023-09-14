@@ -17,14 +17,24 @@ const BoxCanvas = () => {
       />
 
       <spotLight
-        color={"purple"}
+        color={"#7a0080"}
         intensity={400}
-        position={[20, 20, -15]}
+        position={[25, 20, -15]}
         decay={0.4}
       />
       <Suspense fallback={null}>
-        <Boxes position={[-5, 14, -15]} />
-        <Boxes position={[7, 8, -1]} />
+        <Boxes
+          position={[-5, 14, -15]}
+          color={"royalBlue"}
+          emissive={"#4a0d76"}
+          intensity={0.2}
+        />
+        <Boxes
+          position={[10, 5, -2]}
+          color={"black"}
+          emissive={"black"}
+          intensity={1}
+        />
       </Suspense>
       <Stats />
       {/* <OrbitControls /> */}

@@ -5,32 +5,26 @@ import React from "react";
 import { useShape } from "./positions";
 import BoxInstance from "./boxInstance";
 
-function LetterH({ position }) {
+function LetterH({ color, emissive, intensity, ...props }) {
   const { hShape } = useShape();
   const [hoverPosition, setHoverPosition] = useState(null);
 
-  const pointerOver = (e, position) => {
-    e.stopPropagation();
-    setHoverPosition(position);
-  };
-
   return (
-    <group>
-      <Instances
-        limit={hShape.length * 4}
-        range={hShape.length * 4}
-        position={position}
-      >
+    <group {...props}>
+      <Instances limit={hShape.length * 4} range={hShape.length * 4}>
         <boxGeometry />
 
-        <meshStandardMaterial emissive={"purple"} emissiveIntensity={0.2} />
+        <meshStandardMaterial
+          color={color}
+          emissive={emissive}
+          emissiveIntensity={intensity}
+        />
 
         <group>
           {hShape.map((props, key) => (
             <BoxInstance
               key={key}
               box={props}
-              pointerOver={pointerOver}
               hoverPosition={hoverPosition}
               setHoverPosition={setHoverPosition}
             />
