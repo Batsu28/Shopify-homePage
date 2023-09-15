@@ -12,14 +12,24 @@ const Backround = ({ style, num }) => {
   const myArray = new Array(num).fill(0);
 
   return (
-    <div className={`w-full flex flex-wrap ${style}`}>
-      {myArray.map((_, i) => (
-        <div
-          key={i}
-          className={`w-1/5 border-[0.3px] border-white bg-transparent`}
-          style={{ height: size }}
-        ></div>
-      ))}
+    <div className={`w-full h-full ${style}`}>
+      <div className={`w-full flex flex-wrap `}>
+        {myArray.map((_, i) =>
+          i < 5 ? (
+            <div
+              key={i}
+              className={`w-1/5  border-[0.1px] border-white border-t-0 bg-transparent`}
+              style={{ height: size }}
+            />
+          ) : (
+            <div
+              key={i}
+              className={`w-1/5 border-[0.1px] border-white bg-transparent`}
+              style={{ height: size }}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 };

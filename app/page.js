@@ -7,15 +7,15 @@ export default function Home() {
     <main className="w-full h-[1000px] relative">
       <Backround
         style={
-          "absolute top-0 left-0 -z-10 bg-gradient-to-br from-blue-900 to-purple-900"
+          "absolute top-0 left-0 -z-10 bg-gradient-to-br from-blue-900 from-10% to-purple-900"
         }
-        num={50}
+        num={15}
       />
       <BoxCanvas />
       <Overlay />
       <Backround
         style={
-          "relative -top-14 left-0 bg-gradient-to-bl from-blue-900 to-pink-900"
+          "relative -top-14 left-0 bg-gradient-to-bl from-blue-700 to-pink-900"
         }
         num={15}
       />

@@ -6,9 +6,9 @@ const font = Archivo_Black({ subsets: ["latin-ext"], weight: ["400"] });
 
 const MidOverlay = () => {
   return (
-    <div className="w-full px-12 xl:w-4/5 flex flex-col justify-start gap-5 text-white">
+    <div className="w-full px-4 xl:px-12 xl:w-4/5 flex flex-col justify-start gap-5 text-white">
       <h1
-        className={`text-7xl ${font.className} tracking-normal leading-tight`}
+        className={`text-3xl md:text-7xl ${font.className} tracking-normal leading-tight`}
       >
         The Shopify stack for headless commerce
       </h1>
