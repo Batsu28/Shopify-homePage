@@ -19,7 +19,6 @@ function LetterH({ color, emissive, intensity, ...props }) {
           emissive={emissive}
           emissiveIntensity={intensity}
         />
-
         <group>
           {hShape.map((props, key) => (
             <BoxInstance

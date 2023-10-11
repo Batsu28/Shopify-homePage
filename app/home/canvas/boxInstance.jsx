@@ -49,7 +49,7 @@ const BoxInstance = ({ box, hoverPosition, setHoverPosition }) => {
     return arr.map((_, index) => (
       <Instance
         key={index}
-        scale={0.9}
+        scale={0.97}
         position={[0, index, 0]}
         color={"royalBlue"}
       />
